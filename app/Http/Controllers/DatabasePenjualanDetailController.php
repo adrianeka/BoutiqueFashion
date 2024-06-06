@@ -24,11 +24,17 @@ class DatabasePenjualanDetailController extends Controller
                 ->addColumn('barang.kode_barang', function ($row) {
                     return $row->barang->kode_barang;
                 })
-                ->addColumn('barang.nama_barang', function ($row) {
-                    return $row->barang->nama_barang;
+                ->addColumn('kategori', function ($row) {
+                    return $row->kategori;
                 })
-                ->addColumn('barang.harga_jual', function ($row) {
-                    return $row->barang->harga_jual;
+                ->addColumn('item', function ($row) {
+                    return $row->item;
+                })
+                ->addColumn('unit_terjual', function ($row) {
+                    return $row->unit_terjual;
+                })
+                ->addColumn('harga', function ($row) {
+                    return $row->harga;
                 })
                 ->make(true);
         }

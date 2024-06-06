@@ -24,9 +24,9 @@
 <div class="row">
     <div class="col-lg-12 mb-4">
         <!-- Approach -->
-        <div class="card shadow mb-4">
+        <div class="card shadow mb-4 custom-padding">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Dashboard</h6>
+                <h6 class="m-0 font-weight-bold text-danger">Dashboard</h6>
             </div>
             <div class="card-body">
                 <p>Selamat datang, {{Auth::user()->name}}!</p>

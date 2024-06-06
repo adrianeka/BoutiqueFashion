@@ -16,7 +16,7 @@ class DatabasePembelian extends Model
     protected $fillable = [
         'kode_transaksi',
         'tanggal_transaksi',
-        'kode_vendor'
+        'kode_vendor',
     ];
 
     public function vendor()

@@ -17,7 +17,11 @@ return new class extends Migration
             $table->string('kode_customer')->primary();
             $table->string('nama_customer');
             $table->string('alamat');
+            $table->string('city');
+            $table->string('postal_code');
+            $table->string('country');
             $table->string('no_telp');
+            $table->date('Customer_since');
             $table->timestamps();
         });
     }

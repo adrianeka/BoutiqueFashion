@@ -13,8 +13,9 @@ class DatabasePembelianDetail extends Model
 
     protected $fillable = [
         'kode_transaksi',
-        'kode_barang',
-        'jumlah'
+        'ID',
+        'jumlah',
+        'harga'
     ];
 
     public function pembelian()
@@ -24,6 +25,6 @@ class DatabasePembelianDetail extends Model
 
     public function barang()
     {
-        return $this->belongsTo(DatabaseBarang::class, 'kode_barang', 'kode_barang');
+        return $this->belongsTo(DatabaseBarang::class, 'ID', 'ID');
     }
 }

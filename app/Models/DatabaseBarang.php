@@ -10,11 +10,12 @@ class DatabaseBarang extends Model
     use HasFactory;
 
     protected $table = 'database_barang';
-    protected $primaryKey = 'kode_barang';
+    protected $primaryKey = 'ID';
     public $incrementing = false;
 
     protected $fillable = [
-        'kode_barang',
+        'ID',
+        'Kode_Barang',
         'kategori',
         'nama_barang',
         'harga_beli',
@@ -24,11 +25,11 @@ class DatabaseBarang extends Model
 
     public function penjualanDetail()
     {
-        return $this->hasMany(DatabasePenjualanDetail::class, 'kode_barang', 'kode_barang');
+        return $this->hasMany(DatabasePenjualanDetail::class, 'ID', 'ID');
     }
 
     public function pembelianDetail()
     {
-        return $this->hasMany(DatabasePembelianDetail::class, 'kode_barang', 'kode_barang');
+        return $this->hasMany(DatabasePembelianDetail::class, 'ID', 'ID');
     }
 }

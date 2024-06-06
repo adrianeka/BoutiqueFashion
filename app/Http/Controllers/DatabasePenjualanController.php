@@ -23,21 +23,15 @@ class DatabasePenjualanController extends Controller
 
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('customer.kode_customer', function ($row) {
+                ->addColumn('kode_customer', function ($row) {
                     return $row->customer->kode_customer;
                 })
-                ->addColumn('customer.nama_customer', function ($row) {
-                    return $row->customer->nama_customer;
-                })
-                ->addColumn('customer.alamat', function ($row) {
-                    return $row->customer->alamat;
-                })
-                ->addColumn('customer.no_telp', function ($row) {
-                    return $row->customer->no_telp;
+                ->addColumn('tanggal;', function ($row) {
+                    return $row->tanggal;
                 })
                 ->addColumn('options', function ($penjualan) {
                     $deleteUrl = route('penjualan.destroy', $penjualan->kode_transaksi); // Assuming 'destroy' is the route name for deleting a 'vendor'
-                    return "<a style='border: none; background-color:transparent;' class='hapusData' data-kode_vendor='$penjualan->kode_vendor' data-url='$deleteUrl'><i class='fas fa-trash fa-lg text-danger'></i></a>";
+                    return "<a style='border: none; background-color:transparent;' class='hapusData' data-kode_transaksi='$penjualan->kode_transaksi' data-url='$deleteUrl'><i class='fas fa-trash fa-lg text-danger'></i></a>";
                 })
                 ->rawColumns(['options'])
                 ->make(true);
@@ -45,14 +39,16 @@ class DatabasePenjualanController extends Controller
         return response()->json(['message' => 'Unauthorized'], 403);
     }
 
+
     public function tambahPenjualan(Request $request)
     {
         // Ambil nomor faktur terakhir dari database
         $lastInvoice = DatabasePenjualan::orderBy('kode_transaksi', 'desc')->first();
+        // dd($lastInvoice);
 
         // Jika ada faktur terakhir, buat faktur baru dengan menambah 1
-        if ($lastInvoice) {
-            $lastNumber = intval(substr($lastInvoice->kode_transaksi, 3));
+        if ($lastInvoice != null) {
+            $lastNumber = intval(substr($lastInvoice->kode_transaksi, 2));
             $newNumber = $lastNumber + 1;
             $newInvoiceNumber = 'T' . str_pad($newNumber, 3, '0', STR_PAD_LEFT);
         } else {
@@ -63,32 +59,34 @@ class DatabasePenjualanController extends Controller
         $customers = DatabaseCustomer::all();
         $barangs = DatabaseBarang::all();
 
+
         if ($request->isMethod('post')) {
             $request->validate([
-                'kode_transaksi' => 'required|unique:database_penjualan,kode_transaksi',
                 'tanggal_transaksi' => 'required|date',
                 'kode_customer' => 'required|exists:database_customer,kode_customer',
                 'items' => 'required|array',
-                'items.*.kode_barang' => 'required|exists:database_barang,kode_barang',
+                'items.*.nama_barang' => 'required|exists:database_barang,nama_barang',
                 'items.*.jumlah' => 'required|integer|min:1',
             ]);
 
             $penjualan = DatabasePenjualan::create([
-                'kode_transaksi' => $request->kode_transaksi,
-                'tanggal_transaksi' => $request->tanggal_transaksi,
+                'kode_transaksi' => $newInvoiceNumber,
+                'tanggal' => $request->tanggal_transaksi,
                 'kode_customer' => $request->kode_customer,
             ]);
 
             foreach ($request->items as $item) {
-                $barang = DatabaseBarang::where('kode_barang', $item['kode_barang'])->first();
+                $barang = DatabaseBarang::where('nama_barang', $item['nama_barang'])->first();
                 if ($barang->unit >= $item['jumlah']) {
                     $barang->unit -= $item['jumlah'];
                     $barang->save();
-
                     DatabasePenjualanDetail::create([
                         'kode_transaksi' => $penjualan->kode_transaksi,
-                        'kode_barang' => $item['kode_barang'],
-                        'jumlah' => $item['jumlah'],
+                        'ID' => $barang->ID,
+                        'kategori' => $barang->kategori,
+                        'item' => $barang->nama_barang,
+                        'unit_terjual' => $item['jumlah'],
+                        'harga' => $barang->harga_jual,
                     ]);
                 } else {
                     return redirect()->back()->withErrors(['msg' => 'Stok barang ' . $barang->nama_barang . ' tidak mencukupi.']);
@@ -100,7 +98,6 @@ class DatabasePenjualanController extends Controller
 
         return view('page.admin.penjualan.addPenjualan', compact('newInvoiceNumber', 'customers', 'barangs'));
     }
-
 
 
 

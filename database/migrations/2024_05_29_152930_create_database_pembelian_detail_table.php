@@ -19,9 +19,13 @@ return new class extends Migration
                 ->references('kode_transaksi')
                 ->on('database_pembelian')
                 ->onDelete('cascade');
-            $table->string('kode_barang');
-            $table->foreign('kode_barang')->references('kode_barang')->on('database_barang');
+            $table->string('ID');
+            $table->foreign('ID')
+                ->references('ID')
+                ->on('database_barang')
+                ->onDelete('cascade');
             $table->integer('jumlah');
+            $table->decimal('harga');
             $table->timestamps();
         });
     }

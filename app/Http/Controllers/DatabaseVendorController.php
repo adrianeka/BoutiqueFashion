@@ -16,7 +16,18 @@ class DatabaseVendorController extends Controller
     public function dataTable(Request $request)
     {
         if ($request->ajax()) {
-            $data = DatabaseVendor::select(['kode_vendor', 'nama_vendor', 'alamat', 'no_telp']);
+            $data = DatabaseVendor::select([
+                'kode_vendor',
+                'nama_vendor',
+                'alamat',
+                'kota',
+                'kode_pos',
+                'provinsi',
+                'no_telp',
+                'fax',
+                'email',
+                'kategori'
+            ]);
             return Datatables::of($data)
                 ->addColumn('options', function ($vendor) {
                     $editUrl = route('vendor.update', $vendor->kode_vendor); // Assuming 'update' is the route name for editing a 'vendor'
@@ -35,16 +46,29 @@ class DatabaseVendorController extends Controller
                 'kode_vendor' => 'required|unique:database_vendor,kode_vendor',
                 'nama_vendor' => 'required',
                 'alamat' => 'required',
+                'kota' => 'required',
+                'kode_pos' => 'required',
+                'provinsi' => 'required',
                 'no_telp' => 'required',
+                'fax' => 'nullable',
+                'email' => 'required|email',
+                'kategori' => 'required',
             ], [
                 'kode_vendor.unique' => 'Kode Vendor sudah digunakan, mohon gunakan kode yang lain.',
+                'email.email' => 'Format email tidak valid.',
             ]);
 
             DatabaseVendor::create([
                 'kode_vendor' => $request->kode_vendor,
                 'nama_vendor' => $request->nama_vendor,
                 'alamat' => $request->alamat,
+                'kota' => $request->kota,
+                'kode_pos' => $request->kode_pos,
+                'provinsi' => $request->provinsi,
                 'no_telp' => $request->no_telp,
+                'fax' => $request->fax,
+                'email' => $request->email,
+                'kategori' => $request->kategori,
             ]);
 
             return redirect()->route('vendor.index')->with('status', 'Data Vendor telah ditambahkan');
@@ -60,10 +84,15 @@ class DatabaseVendorController extends Controller
         if ($request->isMethod('post')) {
             // Update data vendor
             $vendor->update([
-                'kode_vendor' => $request->kode_vendor,
                 'nama_vendor' => $request->nama_vendor,
                 'alamat' => $request->alamat,
+                'kota' => $request->kota,
+                'kode_pos' => $request->kode_pos,
+                'provinsi' => $request->provinsi,
                 'no_telp' => $request->no_telp,
+                'fax' => $request->fax,
+                'email' => $request->email,
+                'kategori' => $request->kategori,
             ]);
 
             return redirect()->route('vendor.update', ['kode_vendor' => $vendor->kode_vendor])->with('status', 'Data telah tersimpan di database');

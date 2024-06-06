@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\DatabaseBarang;
-use App\Models\DatabasePenjualanDetail;
 use Yajra\DataTables\DataTables;
 
 class DatabaseBarangController extends Controller
@@ -17,12 +16,12 @@ class DatabaseBarangController extends Controller
     public function dataTable(Request $request)
     {
         if ($request->ajax()) {
-            $data = DatabaseBarang::select(['kode_barang', 'kategori', 'nama_barang', 'harga_beli', 'harga_jual', 'unit']);
+            $data = DatabaseBarang::select(['ID', 'Kode_Barang', 'kategori', 'nama_barang', 'harga_beli', 'harga_jual', 'unit']);
             return Datatables::of($data)
                 ->addColumn('options', function ($barang) {
-                    $editUrl = route('barang.update', $barang->kode_barang); // Assuming 'update' is the route name for editing a 'barang'
-                    $deleteUrl = route('barang.destroy', $barang->kode_barang); // Assuming 'destroy' is the route name for deleting a 'barang'
-                    return "<a href='$editUrl'><i class='fas fa-edit fa-lg'></i></a> <a style='border: none; background-color:transparent;' class='hapusData' data-kode_barang='$barang->kode_barang' data-url='$deleteUrl'><i class='fas fa-trash fa-lg text-danger'></i></a>";
+                    $editUrl = route('barang.update', $barang->ID);
+                    $deleteUrl = route('barang.destroy', $barang->ID);
+                    return "<a href='$editUrl'><i class='fas fa-edit fa-lg'></i></a> <a style='border: none; background-color:transparent;' class='hapusData' data-id='$barang->ID' data-url='$deleteUrl'><i class='fas fa-trash fa-lg text-danger'></i></a>";
                 })
                 ->rawColumns(['options'])
                 ->make(true);
@@ -33,19 +32,21 @@ class DatabaseBarangController extends Controller
     {
         if ($request->isMethod('post')) {
             $request->validate([
-                'kode_barang' => 'required|unique:database_barang,kode_barang',
+                'ID' => 'required|unique:database_barang,ID',
+                'Kode_Barang' => 'required',
                 'kategori' => 'required',
                 'nama_barang' => 'required',
                 'harga_beli' => 'required|numeric',
                 'harga_jual' => 'required|numeric',
-                'unit' => 'required',
+                'unit' => 'required|integer',
             ], [
-                'kode_barang.unique' => 'Kode Barang sudah digunakan, mohon gunakan kode yang lain.',
+                'ID.unique' => 'ID sudah digunakan, mohon gunakan ID yang lain.',
             ]);
 
             DatabaseBarang::create([
-                'kode_barang' => $request->kode_barang,
-                'kategori' => $request->nama_barang,
+                'ID' => $request->ID,
+                'Kode_Barang' => $request->Kode_Barang,
+                'kategori' => $request->kategori,
                 'nama_barang' => $request->nama_barang,
                 'harga_beli' => $request->harga_beli,
                 'harga_jual' => $request->harga_jual,
@@ -58,30 +59,41 @@ class DatabaseBarangController extends Controller
         return view('page.admin.barang.addBarang');
     }
 
-    public function updateBarang($kode_barang, Request $request)
+    public function updateBarang($ID, Request $request)
     {
-        $barang = DatabaseBarang::findOrFail($kode_barang);
+        $barang = DatabaseBarang::findOrFail($ID);
 
         if ($request->isMethod('post')) {
+            $request->validate([
+                'Kode_Barang' => 'required',
+                'kategori' => 'required',
+                'nama_barang' => 'required',
+                'harga_beli' => 'required|numeric',
+                'harga_jual' => 'required|numeric',
+                'unit' => 'required|integer',
+            ]);
+
             $barang->update([
-                'kode_barang' => $request->kode_barang,
+                'Kode_Barang' => $request->Kode_Barang,
                 'kategori' => $request->kategori,
                 'nama_barang' => $request->nama_barang,
                 'harga_beli' => $request->harga_beli,
                 'harga_jual' => $request->harga_jual,
                 'unit' => $request->unit,
             ]);
-            return redirect()->route('barang.update', ['kode_barang' => $barang->kode_barang])->with('status', 'Data telah tersimpan di database');
+
+            return redirect()->route('barang.index', ['ID' => $barang->ID])->with('status', 'Data telah tersimpan di database');
         }
+
         return view('page.admin.barang.updateBarang', [
             'barang' => $barang
         ]);
     }
 
-    public function hapusBarang($id_transaksi)
+    public function hapusBarang($ID)
     {
-        $barang = DatabaseBarang::findOrFail($id_transaksi);
-        $barang->delete($id_transaksi);
+        $barang = DatabaseBarang::findOrFail($ID);
+        $barang->delete();
 
         return response()->json([
             'msg' => 'Data yang dipilih telah dihapus'

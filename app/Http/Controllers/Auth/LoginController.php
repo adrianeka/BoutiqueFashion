@@ -64,7 +64,7 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         // Setelah berhasil login, periksa peran pengguna
-        $role = $user->role;
+        // $role = $user->role;
         // dd($role);
         // Redirect berdasarkan peran pengguna
 

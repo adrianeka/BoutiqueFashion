@@ -6,57 +6,46 @@
 @endsection
 
 @section('main-content')
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Data Barang</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('home') }}">Beranda</a>
-                    </li>
-                    <li class="breadcrumb-item active">Barang</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</section>
+
+<div class="block-header">
+    <h2>DATA BARANG</h2>
+</div>
 
 <!-- Main content -->
-<section class="content">
+<div class="row clearfix">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <!-- Default box -->
+        <div class="card">
+            <div class="card-header" style=" padding: 1rem;">
+                <a href="{{ route('barang.add') }}">
+                    <button type="button" class="btn btn-primary">
+                        Tambah Data
+                    </button>
+                </a>
+            </div>
+            <div class="card-body p-0" style="margin: 20px">
+                <table id="previewBarang" class="table table-striped table-bordered display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Kode Barang</th>
+                            <th>Kategori</th>
+                            <th>Nama Barang</th>
+                            <th>Harga Beli</th>
+                            <th>Harga Jual</th>
+                            <th>Unit</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
 
-    <!-- Default box -->
-    <div class="card">
-        <div class="card-header">
-            <a href="{{ route('barang.add') }}">
-                <button type="button" class="btn btn-primary">
-                    Tambah Data
-                </button>
-            </a>
-        </div>
-        <div class="card-body p-0" style="margin: 20px">
-            <table id="previewBarang" class="table table-striped table-bordered display" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Kode Barang</th>
-                        <th>Kategori</th>
-                        <th>Nama Barang</th>
-                        <th>Harga Beli</th>
-                        <th>Harga Jual</th>
-                        <th>Unit</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-        <!-- /.card-body -->
     </div>
-    <!-- /.card -->
+</div>
+<!-- /.card -->
 
-</section>
 @endsection
 
 @section('script_footer')
@@ -78,7 +67,7 @@
                 }
             },
             "columns": [{
-                "data": "kode_barang"
+                "data": "Kode_Barang"
             }, {
                 "data": "kategori"
             }, {
@@ -135,7 +124,7 @@
 
         // hapus data
         $('#previewBarang').on('click', '.hapusData', function() {
-            var kode_barang = $(this).data("id");
+            var id = $(this).data("id");
             var url = $(this).data("url");
 
             Swal.fire({
@@ -154,7 +143,7 @@
                         url: url,
                         type: 'DELETE',
                         data: {
-                            "kode_barang": kode_barang,
+                            "ID": id,
                             "_token": "{{csrf_token()}}"
                         },
                         success: function(response) {

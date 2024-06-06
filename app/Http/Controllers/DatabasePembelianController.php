@@ -26,6 +26,9 @@ class DatabasePembelianController extends Controller
                 ->addColumn('vendor.kode_vendor', function ($row) {
                     return $row->vendor->kode_vendor;
                 })
+                ->addColumn('tanggal_transaksi', function ($row) {
+                    return $row->tanggal_transaksi;
+                })
                 ->addColumn('vendor.nama_vendor', function ($row) {
                     return $row->vendor->nama_vendor;
                 })
@@ -35,6 +38,7 @@ class DatabasePembelianController extends Controller
                 ->addColumn('vendor.no_telp', function ($row) {
                     return $row->vendor->no_telp;
                 })
+
                 ->addColumn('options', function ($pembelian) {
                     $deleteUrl = route('pembelian.destroy', $pembelian->kode_transaksi); // Assuming 'destroy' is the route name for deleting a 'vendor'
                     return "<a style='border: none; background-color:transparent;' class='hapusData' data-kode_vendor='$pembelian->kode_vendor' data-url='$deleteUrl'><i class='fas fa-trash fa-lg text-danger'></i></a>";
@@ -69,7 +73,7 @@ class DatabasePembelianController extends Controller
                 'tanggal_transaksi' => 'required|date',
                 'kode_vendor' => 'required|exists:database_vendor,kode_vendor',
                 'items' => 'required|array',
-                'items.*.kode_barang' => 'required|exists:database_barang,kode_barang',
+                'items.*.nama_barang' => 'required|exists:database_barang,nama_barang',
                 'items.*.jumlah' => 'required|integer|min:1',
             ]);
 
@@ -81,7 +85,8 @@ class DatabasePembelianController extends Controller
 
             foreach ($request->items as $item) {
                 // Ambil data barang yang dibeli
-                $barang = DatabaseBarang::where('kode_barang', $item['kode_barang'])->first();
+                $barang = DatabaseBarang::where('nama_barang', $item['nama_barang'])->first();
+                $vendor = DatabaseVendor::where('kode_Vendor', $item['kode_vendor'])->first();
 
                 // Tambahkan jumlah barang yang dibeli ke stok barang
                 $barang->unit += $item['jumlah'];
@@ -90,8 +95,10 @@ class DatabasePembelianController extends Controller
                 // Simpan detail pembelian
                 DatabasePembelianDetail::create([
                     'kode_transaksi' => $pembelian->kode_transaksi,
-                    'kode_barang' => $item['kode_barang'],
+                    'nama_barang' => $barang->nama_barang,
+                    'nama_vendor' => $vendor->nama_vendor,
                     'jumlah' => $item['jumlah'],
+                    'harga' => $barang->harga_beli
                 ]);
             }
 

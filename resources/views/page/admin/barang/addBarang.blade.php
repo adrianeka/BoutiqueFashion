@@ -2,111 +2,112 @@
 @section('judul', 'Tambah Barang')
 @section('main-content')
 <!-- Content Header (Page header) -->
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Tambah Barang</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('home') }}">Beranda</a>
-                    </li>
-                    <li class="breadcrumb-item active">Tambah Barang</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-    <!-- /.container-fluid -->
-</section>
+<div class="block-header">
+    <h2>Tambah Barang</h2>
+</div>
+
+@if(session('status'))
+<div class="alert alert-success alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h4><i class="icon fa fa-check"></i> Berhasil!</h4>
+    {{ session('status') }}
+</div>
+@endif
 
 <!-- Main content -->
-<section class="content container">
-    @if(session('status'))
-    <div class="alert alert-success alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        <h4><i class="icon fa fa-check"></i> Berhasil!</h4>
-        {{ session('status') }}
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    Informasi Barang
+                </h2>
+            </div>
+            <div class="body">
+                <form method="post" action="{{ route('barang.add') }}">
+                    @csrf
+                    <label for="kode_barang">ID</label>
+                    <div class="form-group">
+                        <input type="text" id="ID" name="ID" class="form-control @error('ID') is-invalid @enderror" placeholder="Masukkan ID" value="{{ old('ID') }}" required>
+                        @error('kode_barang')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                    <label for="Kode_Barang">Kode Barang</label>
+                    <div class="form-group">
+                        <input type="text" id="Kode_Barang" name="Kode_Barang" class="form-control @error('Kode_Barang') is-invalid @enderror" placeholder="Masukkan Kode Barang" value="{{ old('Kode_Barang') }}" required>
+                        @error('Kode_Barang')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <label for="kategori">Kategori</label>
+                    <div class="form-group">
+                        <input type="text" id="kategori" name="kategori" class="form-control @error('kategori') is-invalid @enderror" placeholder="Masukkan Kategori" value="{{ old('kategori') }}" required>
+                        @error('kategori')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <label for="nama_barang">Nama Barang</label>
+                    <div class="form-group">
+                        <input type="text" id="nama_barang" name="nama_barang" class="form-control @error('nama_barang') is-invalid @enderror" placeholder="Masukkan Nama Barang" value="{{ old('nama_barang') }}" required>
+                        @error('nama_barang')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <label for="harga_beli">Harga Beli</label>
+                    <div class="form-group">
+                        <input type="text" id="harga_beli" name="harga_beli" class="form-control @error('harga_beli') is-invalid @enderror" placeholder="Masukkan Harga Beli" value="{{ old('harga_beli') }}" required>
+                        @error('harga_jual')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <label for="harga_jual">Harga Jual</label>
+                    <div class="form-group">
+                        <input type="text" id="harga_jual" name="harga_jual" class="form-control @error('harga_jual') is-invalid @enderror" placeholder="Masukkan Harga Jual" value="{{ old('harga_jual') }}" required>
+                        @error('harga_jual')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <label for="unit">Unit</label>
+                    <div class="form-group">
+                        <input type="text" id="unit" name="unit" class="form-control @error('unit') is-invalid @enderror" placeholder="Masukkan Unit" value="{{ old('unit') }}" required>
+                        @error('unit')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                    <!-- /.card -->
+
+                    <div class="row">
+                        <div class="col-12">
+                            <a href="{{ route('barang.index') }}" class="btn btn-secondary m-t-15 waves-effect">Cancel</a>
+                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">Tambah Barang</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- /.card-body -->
+        </div>
     </div>
-    @endif
-    <form method="post" action="{{ route('barang.add') }}">
-        @csrf
-        <div class="row">
-            <div class="col d-flex justify-content-center">
-                <div class="card card-primary w-100 h-100">
-                    <div class="card-header">
-                        <h3 class="card-title">Informasi Barang</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="kode_barang">Kode Barang</label>
-                            <input type="text" id="kode_barang" name="kode_barang" class="form-control @error('kode_barang') is-invalid @enderror" placeholder="Masukkan Kode Barang" value="{{ old('kode_barang') }}" required>
-                            @error('kode_barang')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="kategori">Kategori</label>
-                            <input type="text" id="kategori" name="kategori" class="form-control @error('kategori') is-invalid @enderror" placeholder="Masukkan Kategori Barang" value="{{ old('kategori') }}" required>
-                            @error('kategori')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="nama_barang">Nama Barang</label>
-                            <input type="text" id="nama_barang" name="nama_barang" class="form-control @error('nama_barang') is-invalid @enderror" placeholder="Masukkan Nama Barang" value="{{ old('nama_barang') }}" required>
-                            @error('nama_barang')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="harga_beli">Harga Beli</label>
-                            <input type="number" id="harga_beli" name="harga_beli" class="form-control @error('harga_beli') is-invalid @enderror" placeholder="Masukkan Harga Beli" value="{{ old('harga_beli') }}" required>
-                            @error('harga_beli')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="harga_jual">Harga Jual</label>
-                            <input type="number" id="harga_jual" name="harga_jual" class="form-control @error('harga_jual') is-invalid @enderror" placeholder="Masukkan Harga Jual" value="{{ old('harga_jual') }}" required>
-                            @error('harga_jual')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="unit">Unit</label>
-                            <input type="text" id="unit" name="unit" class="form-control @error('unit') is-invalid @enderror" placeholder="Masukkan Unit Barang" value="{{ old('unit') }}" required>
-                            @error('unit')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <a href="{{ route('barang.index') }}" class="btn btn-secondary">Cancel</a>
-                <button type="submit" class="btn btn-success float-right">Tambah Barang</button>
-            </div>
-        </div>
-    </form>
-</section>
+</div>
 <!-- /.content -->
 
 @endsection
@@ -117,16 +118,14 @@
     $(document).ready(function() {
         $('#form-tambah-barang').validate({
             rules: {
-                kode_barang: {
+                ID: {
                     required: true,
-                    minlength: 3
+                },
+                Kode_Barang: {
+                    required: true,
                 },
                 nama_barang: {
                     required: true
-                },
-                harga_beli: {
-                    required: true,
-                    number: true
                 },
                 harga_jual: {
                     required: true,
@@ -137,16 +136,15 @@
                 }
             },
             messages: {
-                kode_barang: {
+                ID: {
+                    required: "ID harus diisi",
+                },
+                Kode_Barang: {
                     required: "Kode Barang harus diisi",
                     minlength: "Kode Barang minimal 3 karakter"
                 },
                 nama_barang: {
                     required: "Nama Barang harus diisi"
-                },
-                harga_beli: {
-                    required: "Harga Beli harus diisi",
-                    number: "Harga Beli harus berupa angka"
                 },
                 harga_jual: {
                     required: "Harga Jual harus diisi",

@@ -2,62 +2,56 @@
 @section('judul', 'List Customer')
 @section('script_head')
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
 
 @section('main-content')
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Data Customer</h1>
+<div class="block-header">
+    <h2>Data Customer</h2>
+</div>
+
+@if(session('status'))
+<div class="alert alert-success alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h4><i class="icon fa fa-check"></i> Berhasil!</h4>
+    {{ session('status') }}
+</div>
+@endif
+
+<div class="row clearfix">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header" style=" padding: 1rem;">
+                <a href="{{ route('customer.add') }}">
+                    <button type="button" class="btn btn-primary">
+                        Tambah Data
+                    </button>
+                </a>
             </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('home') }}">Beranda</a>
-                    </li>
-                    <li class="breadcrumb-item active">Customer</li>
-                </ol>
+            <div class="card-body p-0" style="margin: 20px">
+                <table id="previewCustomer" class="table table-striped table-bordered display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Kode Customer</th>
+                            <th>Nama Customer</th>
+                            <th>Alamat</th>
+                            <th>City</th>
+                            <th>Postal Code</th>
+                            <th>Country</th>
+                            <th>No. Telepon</th>
+                            <th>Customer Since</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
         </div>
     </div>
-</section>
-
-<!-- Main content -->
-<section class="content">
-
-    <!-- Default box -->
-    <div class="card">
-        <div class="card-header">
-            <a href="{{ route('customer.add') }}">
-                <button type="button" class="btn btn-primary">
-                    Tambah Data
-                </button>
-            </a>
-        </div>
-        <div class="card-body p-0" style="margin: 20px">
-            <table id="previewCustomer" class="table table-striped table-bordered display" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Kode Customer</th>
-                        <th>Nama Customer</th>
-                        <th>Alamat</th>
-                        <th>No. Telepon</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-        <!-- /.card-body -->
-    </div>
-    <!-- /.card -->
-
-</section>
+</div>
 @endsection
-@section('script_footer')
 
+@section('script_footer')
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -71,20 +65,37 @@
                 "dataType": "json",
                 "type": "POST",
                 "data": {
-                    _token: "{{csrf_token()}}"
+                    _token: "{{ csrf_token() }}"
                 }
             },
             "columns": [{
-                "data": "kode_customer"
-            }, {
-                "data": "nama_customer"
-            }, {
-                "data": "alamat"
-            }, {
-                "data": "no_telp"
-            }, {
-                "data": "options"
-            }],
+                    "data": "kode_customer"
+                },
+                {
+                    "data": "nama_customer"
+                },
+                {
+                    "data": "alamat"
+                },
+                {
+                    "data": "city"
+                },
+                {
+                    "data": "postal_code"
+                },
+                {
+                    "data": "country"
+                },
+                {
+                    "data": "no_telp"
+                },
+                {
+                    "data": "customer_since"
+                },
+                {
+                    "data": "options"
+                },
+            ],
             "language": {
                 "decimal": "",
                 "emptyTable": "Tak ada data yang tersedia pada tabel ini",
@@ -134,7 +145,7 @@
                             type: 'DELETE',
                             data: {
                                 "kode_customer": kode_customer,
-                                "_token": "{{csrf_token()}}"
+                                "_token": "{{ csrf_token() }}"
                             },
                             success: function(response) {
                                 Swal.fire('Terhapus!', response.msg, 'success');

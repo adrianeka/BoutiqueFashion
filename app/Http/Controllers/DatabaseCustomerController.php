@@ -16,7 +16,7 @@ class DatabaseCustomerController extends Controller
     public function dataTable(Request $request)
     {
         if ($request->ajax()) {
-            $data = DatabaseCustomer::select(['kode_customer', 'nama_customer', 'alamat', 'no_telp']);
+            $data = DatabaseCustomer::select(['kode_customer', 'nama_customer', 'alamat', 'city', 'postal_code', 'country', 'no_telp', 'customer_since']);
             return Datatables::of($data)
                 ->addColumn('options', function ($customer) {
                     $editUrl = route('customer.update', $customer->kode_customer); // Assuming 'update' is the route name for editing a customer
@@ -35,7 +35,11 @@ class DatabaseCustomerController extends Controller
                 'kode_customer' => 'required|unique:database_customer,kode_customer',
                 'nama_customer' => 'required',
                 'alamat' => 'required',
+                'city' => 'required', // Menambah validasi untuk city
+                'postal_code' => 'required', // Menambah validasi untuk postal_code
+                'country' => 'required', // Menambah validasi untuk country
                 'no_telp' => 'required',
+                'customer_since' => 'required|date', // Menambah validasi untuk customer_since
             ], [
                 'kode_customer.unique' => 'Kode Customer sudah digunakan, mohon gunakan kode yang lain.',
             ]);
@@ -44,7 +48,11 @@ class DatabaseCustomerController extends Controller
                 'kode_customer' => $request->kode_customer,
                 'nama_customer' => $request->nama_customer,
                 'alamat' => $request->alamat,
+                'city' => $request->city, // Menambah kolom city
+                'postal_code' => $request->postal_code, // Menambah kolom postal_code
+                'country' => $request->country, // Menambah kolom country
                 'no_telp' => $request->no_telp,
+                'customer_since' => $request->customer_since, // Menambah kolom customer_since
             ]);
 
             return redirect()->route('customer.index')->with('status', 'Data Customer telah ditambahkan');
@@ -63,7 +71,11 @@ class DatabaseCustomerController extends Controller
                 'kode_customer' => $request->kode_customer,
                 'nama_customer' => $request->nama_customer,
                 'alamat' => $request->alamat,
+                'city' => $request->city, // Menambah kolom city
+                'postal_code' => $request->postal_code, // Menambah kolom postal_code
+                'country' => $request->country, // Menambah kolom country
                 'no_telp' => $request->no_telp,
+                'customer_since' => $request->customer_since, // Menambah kolom customer_since
             ]);
 
             return redirect()->route('customer.index')->with('status', 'Data Customer berhasil diperbarui.');

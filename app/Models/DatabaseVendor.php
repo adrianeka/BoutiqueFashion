@@ -17,7 +17,13 @@ class DatabaseVendor extends Model
         'kode_vendor',
         'nama_vendor',
         'alamat',
-        'no_telp'
+        'kota',
+        'kode_pos',
+        'provinsi',
+        'no_telp',
+        'fax',
+        'email',
+        'kategori',
     ];
 
     public function pembelian()

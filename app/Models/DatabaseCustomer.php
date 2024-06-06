@@ -17,9 +17,13 @@ class DatabaseCustomer extends Model
         'kode_customer',
         'nama_customer',
         'alamat',
-        'no_telp'
+        'city',
+        'postal_code',
+        'country',
+        'no_telp',
+        'customer_since'
     ];
-    
+
 
     public function penjualan()
     {

@@ -2,45 +2,34 @@
 @section('judul', 'Tambah Pembelian')
 @section('main-content')
 <!-- Content Header (Page header) -->
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Tambah Pembelian</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('home') }}">Beranda</a>
-                    </li>
-                    <li class="breadcrumb-item active">Tambah Pembelian</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-    <!-- /.container-fluid -->
-</section>
+<div class="block-header">
+    <h2>Pembelian</h2>
+</div>
 
-<!-- Main content -->
-<section class="content container">
-    @if(session('status'))
-    <div class="alert alert-success alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        <h4><i class="icon fa fa-check"></i> Berhasil!</h4>
-        {{ session('status') }}
-    </div>
-    @endif
-    <form method="post" action="{{ route('pembelian.add') }}">
-        @csrf
-        <div class="row">
-            <div class="col d-flex justify-content-center">
-                <div class="card card-primary w-100 h-100">
+
+@if(session('status'))
+<div class="alert alert-success alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h4><i class="icon fa fa-check"></i> Berhasil!</h4>
+    {{ session('status') }}
+</div>
+@endif
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>Informasi Penjualan</h2>
+            </div>
+            <div class="body">
+                <form method="post" action="{{ route('pembelian.add') }}">
+                    @csrf
                     <div class="card-header">
                         <h3 class="card-title">Informasi Pembelian</h3>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="kode_transaksi">Nomor Faktur</label>
+                            <label for="kode_transaksi">Nomor Transaksi</label>
                             <input type="text" id="kode_transaksi" name="kode_transaksi" class="form-control @error('kode_transaksi') is-invalid @enderror" value="{{ $newInvoiceNumber }}" readonly>
                             @error('kode_transaksi')
                             <span class="invalid-feedback" role="alert">
@@ -73,11 +62,11 @@
                         <div class="form-group">
                             <label for="items">Barang</label>
                             <div id="items">
-                                <div class="item mb-2">
+                                <div class="item">
                                     <div class="mb-4">
-                                        <select name="items[0][kode_barang]" class="form-control @error('items.0.kode_barang') is-invalid @enderror" required>
+                                        <select name="items[0][nama_barang]" class="form-control @error('items.0.nama_barang') is-invalid @enderror" required>
                                             @foreach($barangs as $barang)
-                                            <option value="{{ $barang->kode_barang }}">{{ $barang->nama_barang }}</option>
+                                            <option value="{{ $barang->nama_barang }}">{{ $barang->nama_barang }} (Stok: {{ $barang->unit }})</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -100,18 +89,18 @@
                         </div>
                     </div>
                     <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
+                    <div class="row">
+                        <div class="col-12">
+                            <a href="{{ route('pembelian.index') }}" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-success float-right">Tambah Pembelian</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <a href="{{ route('pembelian.index') }}" class="btn btn-secondary">Cancel</a>
-                <button type="submit" class="btn btn-success float-right">Tambah Pembelian</button>
-            </div>
-        </div>
-    </form>
-</section>
+    </div>
+</div>
+
 <!-- /.content -->
 @endsection
 
@@ -130,16 +119,16 @@
         newItem.classList.add('item', 'mt-2', 'mb-2');
         newItem.innerHTML = `
             <div class="mb-4">
-                <select name="items[${itemIndex}][kode_barang]" class="form-control @error('items.${itemIndex}.kode_barang') is-invalid @enderror" required>
+                <select name="items[${itemIndex}][nama_barang]" class="form-control @error('items.${itemIndex}.nama_barang') is-invalid @enderror" required>
                     @foreach($barangs as $barang)
-                        <option value="{{ $barang->kode_barang }}">{{ $barang->nama_barang }}</option>
+                        <option value="{{ $barang->nama_barang }}">{{ $barang->nama_barang }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="mb-4">
                 <input type="number" name="items[${itemIndex}][jumlah]" class="form-control @error('items.${itemIndex}.jumlah') is-invalid @enderror" placeholder="Jumlah" required>
             </div>
-            @error('items.${itemIndex}.kode_barang')
+            @error('items.${itemIndex}.nama_barang')
             <spanclass="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </spanclass=>

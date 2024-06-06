@@ -21,19 +21,26 @@ class DatabasePembelianDetailController extends Controller
 
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('barang.kode_barang', function ($row) {
-                    return $row->barang->kode_barang;
+                ->addColumn('ID', function ($row) {
+                    return $row->ID;
                 })
                 ->addColumn('barang.nama_barang', function ($row) {
                     return $row->barang->nama_barang;
                 })
-                ->addColumn('barang.harga_jual', function ($row) {
-                    return $row->barang->harga_beli;
+                ->addColumn('jumlah', function ($row) {
+                    return $row->jumlah;
+                })
+                ->addColumn('harga', function ($row) {
+                    return $row->harga;
+                })
+                ->addColumn('total', function ($row) {
+                    return $row->harga * $row->jumlah;
                 })
                 ->make(true);
         }
         return response()->json(['message' => 'Unauthorized'], 403);
     }
+
 
     public function hapusPembelian($kode_transaksi)
     {

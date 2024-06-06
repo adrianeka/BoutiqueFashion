@@ -1,62 +1,48 @@
 @extends('layouts.admin')
-@section('judul', 'List Penjualan')
+@section('judul', 'List Pembelian')
 @section('script_head')
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
 
 @section('main-content')
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Data Pembelian</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('home') }}">Beranda</a>
-                    </li>
-                    <li class="breadcrumb-item active">Pembelian</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</section>
 
 <!-- Main content -->
-<section class="content">
+<div class="block-header">
+    <h1>Data Pembelian</h1>
+</div>
 
-    <!-- Default box -->
-    <div class="card">
-        <div class="card-header">
-            <a href="{{ route('pembelian.add') }}">
-                <button type="button" class="btn btn-primary">
-                    Tambah Data
-                </button>
-            </a>
+<div class="row clearfix">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header" style=" padding: 1rem;">
+                <a href="{{ route('pembelian.add') }}">
+                    <button type="button" class="btn btn-primary">
+                        Tambah Data
+                    </button>
+                </a>
+            </div>
+            <div class="card-body p-0" style="margin: 20px">
+                <table id="previewPembelian" class="table table-striped table-bordered display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>kode transaksi</th>
+                            <th>Tanggal Transaksi</th>
+                            <th>Kode Vendor</th>
+                            <th>Nama Vendor</th>
+                            <th>Alamat Vendor</th>
+                            <th>No HP Vendor</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
         </div>
-        <div class="card-body p-0" style="margin: 20px">
-            <table id="previewPembelian" class="table table-striped table-bordered display" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Nomor Faktur</th>
-                        <th>Tanggal Transaksi</th>
-                        <th>Kode Vendor</th>
-                        <th>Nama Vendor</th>
-                        <th>Alamat</th>
-                        <th>No Telp</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-        <!-- /.card-body -->
+        <!-- /.card -->
     </div>
-    <!-- /.card -->
-
-</section>
+</div>
 @endsection
 
 @section('script_footer')

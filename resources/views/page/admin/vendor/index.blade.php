@@ -6,55 +6,47 @@
 @endsection
 
 @section('main-content')
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Data Vendor</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('home') }}">Beranda</a>
-                    </li>
-                    <li class="breadcrumb-item active">Vendor</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</section>
+<div class="block-header">
+    <h2>Data Vendor</h2>
+</div>
 
 <!-- Main content -->
-<section class="content">
+<div class="row clearfix">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header" style=" padding: 1rem;">
+                <a href="{{ route('vendor.add') }}">
+                    <button type="button" class="btn btn-primary">
+                        Tambah Data
+                    </button>
+                </a>
+            </div>
+            <div class="card-body p-0" style="margin: 20px">
+                <table id="previewVendor" class="table table-striped table-bordered display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Kode Vendor</th>
+                            <th>Nama Vendor</th>
+                            <th>Alamat</th>
+                            <th>Kota</th>
+                            <th>Kode Pos</th>
+                            <th>Provinsi</th>
+                            <th>No. Telepon</th>
+                            <th>Fax</th>
+                            <th>Email</th>
+                            <th>Kategori</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
 
-    <!-- Default box -->
-    <div class="card">
-        <div class="card-header">
-            <a href="{{ route('vendor.add') }}">
-                <button type="button" class="btn btn-primary">
-                    Tambah Data
-                </button>
-            </a>
-        </div>
-        <div class="card-body p-0" style="margin: 20px">
-            <table id="previewVendor" class="table table-striped table-bordered display" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Kode Vendor</th>
-                        <th>Nama Vendor</th>
-                        <th>Alamat</th>
-                        <th>No. Telepon</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-        <!-- /.card-body -->
     </div>
-    <!-- /.card -->
-
-</section>
+</div>
 @endsection
 @section('script_footer')
 
@@ -66,6 +58,7 @@
         $('#previewVendor').DataTable({
             "serverSide": true,
             "processing": true,
+            "scrollX": true, // Menambahkan opsi scrollX
             "ajax": {
                 "url": "{{ route('vendor.dataTable') }}",
                 "dataType": "json",
@@ -84,7 +77,25 @@
                     "data": "alamat"
                 },
                 {
+                    "data": "kota"
+                },
+                {
+                    "data": "kode_pos"
+                },
+                {
+                    "data": "provinsi"
+                },
+                {
                     "data": "no_telp"
+                },
+                {
+                    "data": "fax"
+                },
+                {
+                    "data": "email"
+                },
+                {
+                    "data": "kategori"
                 },
                 {
                     "data": "options"

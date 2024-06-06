@@ -2,56 +2,38 @@
 @section('judul', 'List Detail Penjualan')
 @section('script_head')
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
 
 @section('main-content')
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Data Detail Penjualan</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('home') }}">Beranda</a>
-                    </li>
-                    <li class="breadcrumb-item active">Detail Penjualan</li>
-                </ol>
+<div class="block-header">
+    <h1>Data Detail Penjualan</h1>
+</div>
+
+<div class="row clearfix">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-body p-0" style="margin: 20px">
+                <table id="previewDetailPenjualan" class="table table-striped table-bordered display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Kode Transaksi</th>
+                            <th>Kode Barang</th>
+                            <th>Kategori</th>
+                            <th>Nama Barang</th>
+                            <th>jumlah Terjual</th>
+                            <th>Harga satuan</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
         </div>
     </div>
-</section>
-
-<!-- Main content -->
-<section class="content">
-
-    <!-- Default box -->
-    <div class="card">
-        <div class="card-body p-0" style="margin: 20px">
-            <table id="previewDetailPenjualan" class="table table-striped table-bordered display" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Kode Transaksi</th>
-                        <th>Kode Barang</th>
-                        <th>Nama Barang</th>
-                        <th>Harga Jual</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-        <!-- /.card-body -->
-    </div>
-    <!-- /.card -->
-
-</section>
+</div>
 @endsection
 
 @section('script_footer')
-
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -75,16 +57,16 @@
                     "data": "barang.kode_barang"
                 },
                 {
-                    "data": "barang.nama_barang"
+                    "data": "kategori"
                 },
                 {
-                    "data": "barang.harga_jual",
-                    "render": function(data) {
-                        return formatRupiah(data);
-                    }
+                    "data": "item"
                 },
                 {
-                    "data": "jumlah"
+                    "data": "unit_terjual"
+                },
+                {
+                    "data": "harga"
                 },
             ],
             "language": {
@@ -126,32 +108,31 @@
             var url = $(this).data("url");
 
             Swal.fire({
-                    title: 'Apa kamu yakin?',
-                    text: "Kamu tidak akan dapat mengembalikan ini!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ya, hapus!',
-                    cancelButtonText: 'Batal'
-                })
-                .then((result) => {
-                    if (result.isConfirmed) {
-                        // Hapus data setelah konfirmasi
-                        $.ajax({
-                            url: url,
-                            type: 'DELETE',
-                            data: {
-                                "kode_transaksi": kode_transaksi,
-                                "_token": "{{ csrf_token() }}"
-                            },
-                            success: function(response) {
-                                Swal.fire('Terhapus!', response.msg, 'success');
-                                $('#previewDetailPenjualan').DataTable().ajax.reload();
-                            }
-                        });
-                    }
-                });
+                title: 'Apa kamu yakin?',
+                text: "Kamu tidak akan dapat mengembalikan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Hapus data setelah konfirmasi
+                    $.ajax({
+                        url: url,
+                        type: 'DELETE',
+                        data: {
+                            "kode_transaksi": kode_transaksi,
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+                            Swal.fire('Terhapus!', response.msg, 'success');
+                            $('#previewDetailPenjualan').DataTable().ajax.reload();
+                        }
+                    });
+                }
+            });
         });
     });
 </script>

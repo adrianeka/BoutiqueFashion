@@ -19,9 +19,12 @@ return new class extends Migration
                 ->references('kode_transaksi')
                 ->on('database_penjualan')
                 ->onDelete('cascade');
-            $table->string('kode_barang');
-            $table->foreign('kode_barang')->references('kode_barang')->on('database_barang');
-            $table->integer('jumlah');
+            $table->string('ID');
+            $table->foreign('ID')->references('ID')->on('database_barang');
+            $table->string('kategori');
+            $table->string('item');
+            $table->string('unit_terjual');
+            $table->decimal('harga');
             $table->timestamps();
         });
     }

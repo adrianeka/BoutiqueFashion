@@ -13,8 +13,11 @@ class DatabasePenjualanDetail extends Model
 
     protected $fillable = [
         'kode_transaksi',
-        'kode_barang',
-        'jumlah'
+        'ID',
+        'kategori',
+        'item',
+        'unit_terjual',
+        'harga',
     ];
 
     public function penjualan()
@@ -24,6 +27,6 @@ class DatabasePenjualanDetail extends Model
 
     public function barang()
     {
-        return $this->belongsTo(DatabaseBarang::class, 'kode_barang', 'kode_barang');
+        return $this->belongsTo(DatabaseBarang::class, 'ID', 'ID');
     }
 }

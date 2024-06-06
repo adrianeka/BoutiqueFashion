@@ -39,7 +39,7 @@ Route::get('/about', function () {
 })->name('about');
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth/login');
 });
 
 Auth::routes();
@@ -61,7 +61,7 @@ Route::group(['prefix' => 'dashboard/admin', 'middleware' => ['auth']], function
             Route::get('/', 'index')->name('index');
             Route::post('dataTable', 'dataTable')->name('dataTable');
             Route::match(['get', 'post'], 'tambah', 'tambahBarang')->name('add');
-            Route::match(['get', 'post'], 'ubah/{kode_barang}', 'updateBarang')->name('update');
+            Route::match(['get', 'post'], 'ubah/{ID}', 'updateBarang')->name('update');
             Route::delete('hapus/{kode_barang}', 'hapusBarang')->name('destroy');
         });
 

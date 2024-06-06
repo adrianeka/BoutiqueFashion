@@ -16,14 +16,13 @@ class DatabaseCustomerSeeder extends Seeder
     public function run()
     {
         DB::table('database_customer')->insert([
-            ['kode_customer' => 'C001', 'nama_customer' => 'Auliya', 'alamat' => 'Jl. Cimindi', 'no_telp' => '082129765486'],
-            ['kode_customer' => 'C002', 'nama_customer' => 'Putri', 'alamat' => 'Jl. Surapati', 'no_telp' => '081367849854'],
-            ['kode_customer' => 'C003', 'nama_customer' => 'Setiawan', 'alamat' => 'Jl. Anggrek', 'no_telp' => '081478296598'],
-            ['kode_customer' => 'C004', 'nama_customer' => 'Kurnia', 'alamat' => 'Jl. Djuanda', 'no_telp' => '089247792733'],
-            ['kode_customer' => 'C005', 'nama_customer' => 'Sentosa', 'alamat' => 'Jl. Mawar', 'no_telp' => '081456379787'],
-            ['kode_customer' => 'C006', 'nama_customer' => 'Aura', 'alamat' => 'Jl. Cibiru', 'no_telp' => '035745264872'],
-            ['kode_customer' => 'C007', 'nama_customer' => 'Muthia', 'alamat' => 'Jl. Gunung Batu', 'no_telp' => '082548258999'],
-            ['kode_customer' => 'C008', 'nama_customer' => 'Agista', 'alamat' => 'Jl. Lembang', 'no_telp' => '081290789497'],
+            ['kode_customer' => 'C001', 'nama_customer' => 'Toni Irawan',   'alamat' => 'Jl. Melati', 'city' => 'Bandung', 'postal_code' => '40132', 'country' => 'Indonesia', 'no_telp' => '812578902', 'Customer_since' => '2023-09-13', 'created_at' => now(), 'updated_at' => now()],
+            ['kode_customer' => 'C002', 'nama_customer' => 'Citra Kinanti', 'alamat' => 'Jl. Melawai', 'city' => 'Bandung', 'postal_code' => '40132', 'country' => 'Indonesia', 'no_telp' => '813556981', 'Customer_since' => '2023-10-15', 'created_at' => now(), 'updated_at' => now()],
+            ['kode_customer' => 'C003', 'nama_customer' => 'Dani Sutanto',  'alamat' => 'Jl. Melati', 'city' => 'Bandung', 'postal_code' => '40132', 'country' => 'Indonesia', 'no_telp' => '814578547', 'Customer_since' => '2023-11-17', 'created_at' => now(), 'updated_at' => now()],
+            ['kode_customer' => 'C004', 'nama_customer' => 'Riani Sari',    'alamat' => 'Jl. Juanda', 'city' => 'Bandung', 'postal_code' => '40133', 'country' => 'Indonesia', 'no_telp' => '815578243', 'Customer_since' => '2023-12-18', 'created_at' => now(), 'updated_at' => now()],
+            ['kode_customer' => 'C005', 'nama_customer' => 'Tanto Wiyahya', 'alamat' => 'Jl. Mawar', 'city' => 'Bandung', 'postal_code' => '40134', 'country' => 'Indonesia', 'no_telp' => '816583548', 'Customer_since' => '2023-12-27', 'created_at' => now(), 'updated_at' => now()],
+            ['kode_customer' => 'C006', 'nama_customer' => 'Ria Riani',     'alamat' => 'Jl. waru', 'city' => 'Jakarta', 'postal_code' => '40123', 'country' => 'Indonesia', 'no_telp' => '878263758', 'Customer_since' => '2024-05-31', 'created_at' => now(), 'updated_at' => now()],
+            ['kode_customer' => 'C007', 'nama_customer' => 'Rani Riani',    'alamat' => 'Jl melati', 'city' => 'Jakarta', 'postal_code' => '40159', 'country' => 'Indonesia', 'no_telp' => '5356364', 'Customer_since' => '2024-05-31', 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 }

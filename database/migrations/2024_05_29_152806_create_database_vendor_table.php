@@ -17,7 +17,13 @@ return new class extends Migration
             $table->string('kode_vendor')->primary();
             $table->string('nama_vendor');
             $table->string('alamat');
+            $table->string('kota');
+            $table->string('kode_pos');
+            $table->string('provinsi');
             $table->string('no_telp');
+            $table->string('fax');
+            $table->string('email');
+            $table->string('kategori');
             $table->timestamps();
         });
     }

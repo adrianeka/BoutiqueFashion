@@ -1,97 +1,143 @@
 @extends('layouts.admin')
-@section('judul', 'Tambah Vendor')
+@section('judul', 'Tambah Vensor')
 @section('main-content')
 <!-- Content Header (Page header) -->
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Tambah Vendor</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('home') }}">Beranda</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('vendor.index') }}">Daftar Vendor</a>
-                    </li>
-                    <li class="breadcrumb-item active">Tambah Vendor</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-    <!-- /.container-fluid -->
-</section>
+<div class="block-header">
+    <h2>Tambah Vensor</h2>
+</div>
+
+@if(session('status'))
+<div class="alert alert-success alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h4><i class="icon fa fa-check"></i> Berhasil!</h4>
+    {{ session('status') }}
+</div>
+@endif
 
 <!-- Main content -->
-<section class="content container">
-    @if(session('status'))
-    <div class="alert alert-success alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        <h4><i class="icon fa fa-check"></i> Berhasil!</h4>
-        {{ session('status') }}
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    Informasi Vendor
+                </h2>
+            </div>
+            <div class="body">
+                <form method="post" action="{{ route('vendor.add') }}">
+                    @csrf
+                    <label for="kode_vendor">Kode Vendor</label>
+                    <div class="form-group">
+                        <input type="text" id="kode_vendor" name="kode_vendor" class="form-control @error('kode_vendor') is-invalid @enderror" placeholder="Masukkan Kode Vendor" value="{{ old('kode_vendor') }}" required>
+                        @error('kode_vendor')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <label for="nama_vendor">Nama Vendor</label>
+                    <div class="form-group">
+                        <input type="text" id="nama_vendor" name="nama_vendor" class="form-control @error('nama_vendor') is-invalid @enderror" placeholder="Masukkan Nama Vendor" value="{{ old('nama_vendor') }}" required>
+                        @error('nama_vendor')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <label for="alamat">Alamat</label>
+                    <div class="form-group">
+                        <input type="text" id="alamat" name="alamat" class="form-control @error('alamat') is-invalid @enderror" placeholder="Masukkan Alamat" value="{{ old('alamat') }}" required>
+                        @error('alamat')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <label for="kota">Kota</label>
+                    <div class="form-group">
+                        <input type="text" id="kota" name="kota" class="form-control @error('kota') is-invalid @enderror" placeholder="Masukkan Kota" value="{{ old('kota') }}" required>
+                        @error('kota')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <label for="kode_pos">Kode Pos</label>
+                    <div class="form-group">
+                        <input type="text" id="kode_pos" name="kode_pos" class="form-control @error('kode_pos') is-invalid @enderror" placeholder="Masukkan Kode Pos" value="{{ old('kode_pos') }}" required>
+                        @error('kode_pos')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <label for="provinsi">Provinsi</label>
+                    <div class="form-group">
+                        <input type="text" id="provinsi" name="provinsi" class="form-control @error('provinsi') is-invalid @enderror" placeholder="Masukkan Provinsi" value="{{ old('provinsi') }}" required>
+                        @error('provinsi')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <label for="no_telp">Nomor Telepon</label>
+                    <div class="form-group">
+                        <input type="text" id="no_telp" name="no_telp" class="form-control @error('no_telp') is-invalid @enderror" placeholder="Masukkan Nomor Telepon" value="{{ old('no_telp') }}" required>
+                        @error('no_telp')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <label for="fax">Fax</label>
+                    <div class="form-group">
+                        <input type="text" id="fax" name="fax" class="form-control @error('fax') is-invalid @enderror" placeholder="Masukkan Fax" value="{{ old('fax') }}">
+                        @error('fax')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <label for="email">Email</label>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Masukkan Email" value="{{ old('email') }}" required>
+                        @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <label for="kategori">Kategori</label>
+                    <div class="form-group">
+                        <input type="text" id="kategori" name="kategori" class="form-control @error('kategori') is-invalid @enderror" placeholder="Masukkan Kategori" value="{{ old('kategori') }}" required>
+                        @error('kategori')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <a href="{{ route('vendor.index') }}" class="btn btn-secondary m-t-15 waves-effect">Cancel</a>
+                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">Tambah Vendor</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <!-- /.card-body -->
+        </div>
     </div>
-    @endif
-    <form method="post" action="{{ route('vendor.add') }}">
-        @csrf
-        <div class="row">
-            <div class="col d-flex justify-content-center">
-                <div class="card card-primary w-100 h-100">
-                    <div class="card-header">
-                        <h3 class="card-title">Informasi Vendor</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="kode_vendor">Kode Vendor</label>
-                            <input type="text" id="kode_vendor" name="kode_vendor" class="form-control @error('kode_vendor') is-invalid @enderror" placeholder="Masukkan Kode Vendor" value="{{ old('kode_vendor') }}" required>
-                            @error('kode_vendor')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="nama_vendor">Nama Vendor</label>
-                            <input type="text" id="nama_vendor" name="nama_vendor" class="form-control @error('nama_vendor') is-invalid @enderror" placeholder="Masukkan Nama Vendor" value="{{ old('nama_vendor') }}" required>
-                            @error('nama_vendor')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="alamat">Alamat</label>
-                            <input type="text" id="alamat" name="alamat" class="form-control @error('alamat') is-invalid @enderror" placeholder="Masukkan Alamat Vendor" value="{{ old('alamat') }}" required>
-                            @error('alamat')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="no_telp">Nomor Telepon</label>
-                            <input type="text" id="no_telp" name="no_telp" class="form-control @error('no_telp') is-invalid @enderror" placeholder="Masukkan Nomor Telepon Vendor" value="{{ old('no_telp') }}" required>
-                            @error('no_telp')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <a href="{{ route('vendor.index') }}" class="btn btn-secondary">Cancel</a>
-                <button type="submit" class="btn btn-success float-right">Tambah Vendor</button>
-            </div>
-        </div>
-    </form>
-</section>
+</div>
 <!-- /.content -->
 
 @endsection
@@ -103,8 +149,7 @@
         $('#form-tambah-vendor').validate({
             rules: {
                 kode_vendor: {
-                    required: true,
-                    minlength: 3
+                    required: true
                 },
                 nama_vendor: {
                     required: true
@@ -112,14 +157,29 @@
                 alamat: {
                     required: true
                 },
+                kota: {
+                    required: true
+                },
+                kode_pos: {
+                    required: true
+                },
+                provinsi: {
+                    required: true
+                },
                 no_telp: {
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                kategori: {
                     required: true
                 }
             },
             messages: {
                 kode_vendor: {
-                    required: "Kode Vendor harus diisi",
-                    minlength: "Kode Vendor minimal 3 karakter"
+                    required: "Kode Vendor harus diisi"
                 },
                 nama_vendor: {
                     required: "Nama Vendor harus diisi"
@@ -127,8 +187,24 @@
                 alamat: {
                     required: "Alamat harus diisi"
                 },
+                kota: {
+                    required: "Kota harus diisi"
+                },
+                kode_pos: {
+                    required: "Kode Pos harus diisi"
+                },
+                provinsi: {
+                    required: "Provinsi harus diisi"
+                },
                 no_telp: {
                     required: "Nomor Telepon harus diisi"
+                },
+                email: {
+                    required: "Email harus diisi",
+                    email: "Format email tidak valid"
+                },
+                kategori: {
+                    required: "Kategori harus diisi"
                 }
             }
         });

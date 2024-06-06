@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('database_penjualan', function (Blueprint $table) {
             $table->string('kode_transaksi')->primary();
-            $table->date('tanggal_transaksi');
             $table->string('kode_customer');
             $table->foreign('kode_customer')->references('kode_customer')->on('database_customer');
+            $table->date('tanggal');
             $table->timestamps();
         });
     }

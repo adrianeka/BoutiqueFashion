@@ -15,8 +15,8 @@ class DatabasePenjualan extends Model
 
     protected $fillable = [
         'kode_transaksi',
-        'tanggal_transaksi',
-        'kode_customer'
+        'kode_customer',
+        'tanggal'
     ];
 
     public function customer()
